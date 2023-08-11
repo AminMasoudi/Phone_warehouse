@@ -5,5 +5,6 @@ app_name = "api"
 
 
 urlpatterns = [
-    path("add_phone/", views.NewPhoneAPI.as_view(), name="New_Phone_API")
+    path("add_phone/", views.NewPhoneAPI.as_view(), name="New_Phone_API"),
+    path("auth/", views.AuthAPI.as_view(), name="auth")
 ]

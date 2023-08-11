@@ -7,3 +7,9 @@ class PhoneSerializer(serializers.ModelSerializer):
         model = Phone
         fields = "__all__"
     # def validate_quantity(self, value)
+
+
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
+

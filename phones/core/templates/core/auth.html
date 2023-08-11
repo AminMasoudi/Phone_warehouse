@@ -2,11 +2,17 @@
 
 {% block title %}Auth{% endblock title %}
 
-{% block body %}
-<form action="" method="post">
-    {{form}}
-    {% csrf_token %}
-    <input type="submit" value="submit">
+{% block main %}
+<form id="form">
+    <div class="mb-3">
+        <input name="username" class="form-control mx-auto w-auto" autocomplete="off" autofocus  id="username" placeholder="Username" type="text">
+    </div>
+    <div class="mb-3">
+        <input name="password" class="form-control mx-auto w-auto" autocomplete="off" autofocus  id="password" placeholder="password" type="password">
+    </div>
+    <button class="btn btn-primary" type="submit">Log In</button>
 </form>
+{% load static %}
 
-{% endblock body %}
+<script src="{% static 'js/auth.js' %}"></script>
+{% endblock main %}
