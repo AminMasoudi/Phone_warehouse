@@ -1,0 +1,12 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Auth{% endblock title %}
+
+{% block body %}
+<form action="" method="post">
+    {{form}}
+    {% csrf_token %}
+    <input type="submit" value="submit">
+</form>
+
+{% endblock body %}
