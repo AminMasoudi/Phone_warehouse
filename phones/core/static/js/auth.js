@@ -11,14 +11,14 @@ document.addEventListener("DOMContentLoaded", function main(event) {
             method : 'POST',
             headers: {
                 'Content-Type' : 'application/json',
-                'X-CSRFToken': '{{ csrf_token }}'
+                'X-CSRFToken': csrf
             },
             body : JSON.stringify({
                 username: username,
                 password: password,
             }),
         };
-        fetch('{{api}}', options)
+        fetch(api, options)
         .then(data => {
             if (!data.ok){
                 addToHeader("failed to authenticate")

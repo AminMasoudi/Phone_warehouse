@@ -7,7 +7,7 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .serializers import PhoneSerializer, LoginSerializer
+from .serializers import PhoneSerializer, LoginSerializer, RegisterSerializer
 
 class NewPhoneAPI(APIView):
     # authentication_classes = SessionAuthentication
@@ -33,3 +33,12 @@ class AuthAPI(APIView):
         return Response({
             "detail": "failed to log in"
         }, 401)
+
+class RegisterAPI(APIView):
+
+    def post(self, request, format=None):
+        register_ser = RegisterSerializer(data=request.data)
+        register_ser.is_valid(raise_exception=True)
+        user = register_ser.save()
+        login(request ,user)
+        return Response(register_ser.validated_data)

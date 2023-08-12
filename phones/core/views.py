@@ -9,3 +9,10 @@ class AuthView(TemplateView):
     extra_context = {
         'api' : reverse_lazy('api:auth')
     }
+
+
+class RegisterView(TemplateView):
+    template_name = "core/register.html"
+    extra_context = {
+        'api' : reverse_lazy('api:register')
+    }
