@@ -1,6 +1,6 @@
 {% extends 'core/base.html' %}
 
-{% block title %}Auth{% endblock title %}
+{% block title %}Register{% endblock title %}
 
 {% block main %}
 <form id="form">
@@ -10,14 +10,15 @@
     <div class="mb-3">
         <input name="password" class="form-control mx-auto w-auto" autocomplete="off" autofocus  id="password" placeholder="password" type="password">
     </div>
-    <button class="btn btn-primary" type="submit">Log In</button>
+    <div class="mb-3">
+        <input name="password2" class="form-control mx-auto w-auto" autocomplete="off" autofocus  id="password2" placeholder="password again" type="password">
+    </div>
+    <button class="btn btn-primary" type="submit">Register</button>
 </form>
 {% load static %}
-
 <script>
     let api = '{{api}}'
     let csrf = '{{ csrf_token }}'
 </script>
-
-<script src="{% static 'js/auth.js' %}"></script>
+<script src="{% static 'js/register.js' %}"></script>
 {% endblock main %}
