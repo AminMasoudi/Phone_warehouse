@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Phones{% endblock title %}
+
+{% block main %}
+
+
+<table class="table">
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col"> Exist</th>
+
+    </tr>
+    {% for phone in object_list %}
+    <tr>
+        <td scope="row">{{phone.id}}</td>
+        <td>{{phone.name}}</td>
+        <td>{{phone.exist}}</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+{% endblock main %}

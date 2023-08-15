@@ -15,7 +15,7 @@
 </style>
 
 
-<form class="form" action="/api/add_phone/" method="post">
+<form class="form" action="{% url 'api:Phones_API' %}" method="post">
     {% csrf_token %}
     <label for="name">Name: </label>
     <input type="text" name="name" id="name">
@@ -34,7 +34,7 @@
 
 
     <input type="number" name="quantity" id="quantity" placeholder="Quantity">
-    <input type="text" name="build" id="build" placeholder="Made in">
+    <input type="text" name="built" id="built" placeholder="Made in">
     <input type="submit" value="Add">
 
 </form>

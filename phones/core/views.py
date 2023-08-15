@@ -1,6 +1,7 @@
-from django.views.generic import TemplateView, CreateView, DetailView
+from django.views.generic import TemplateView, CreateView, ListView
 from django.urls import reverse_lazy
 from .models import Phone
+from django.http import HttpResponseRedirect
 class NewPhoneView(TemplateView):
     template_name = "core/phones.html"
 
@@ -22,3 +23,14 @@ class PhoneCreateView(CreateView):
     model = Phone
     template_name = "core/new_phone.html"
     fields= "__all__"
+
+
+class PhonesListView(ListView):
+    model = Phone
+    template_name = "core/phones_list.html"
+
+
+def index(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse_lazy("core:phones"))
+    return HttpResponseRedirect(reverse_lazy("core:auth"))

@@ -5,8 +5,13 @@ app_name = "core"
 
 
 urlpatterns = [
+    
     path("new_phone/", views.PhoneCreateView.as_view(), name="New_Phone_view"),
     path("auth/", views.AuthView.as_view(), name="auth"),
-    path("register/", views.RegisterView.as_view(), name="register")
+    path("register/", views.RegisterView.as_view(), name="register"),
     
+    path("phones/", views.PhonesListView.as_view(), name="phones"),
+
+    path("", views.index, name="index")
+
 ]
