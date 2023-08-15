@@ -3,30 +3,40 @@
 {% block title %}Add a new phone{% endblock title %}
 
 
-{% block body %}
+{% block main %}
 
 <style>
     .form{
         display: inline-grid;
     }
     input{
-        margin: 2rem;
+        margin: 1rem;
     }
 </style>
 
 
 <form class="form" action="/api/add_phone/" method="post">
+    {% csrf_token %}
     <label for="name">Name: </label>
     <input type="text" name="name" id="name">
+
     <label for="brand">Brand: </label>
     <input type="text" name="brand" id="brand">
+
+    <label for="price">Price</label>
     <input type="number" name="price" id="price">
+
+    <label for="color">Color</label>
     <input type="text" name="color" id="color">
+
+    <label for="size">Size</label>
     <input type="number" name="size" id="size">
+
+
     <input type="number" name="quantity" id="quantity" placeholder="Quantity">
     <input type="text" name="build" id="build" placeholder="Made in">
     <input type="submit" value="Add">
 
 </form>
 
-{% endblock body %}
+{% endblock main %}

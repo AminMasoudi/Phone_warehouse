@@ -44,7 +44,7 @@ class Brand(models.Model):
 class Phone(models.Model):
 
     name = models.CharField(_("Model"), max_length=64, unique=True)
-    brand = models.ForeignKey("core.Brand", verbose_name=_("Brand"), on_delete=models.DO_NOTHING)
+    brand = models.ForeignKey("core.Brand", to_field="name",  verbose_name=_("Brand"), on_delete=models.DO_NOTHING)
     price = models.PositiveIntegerField(_("Price"))
     color = models.CharField(_("Color"), max_length=50)
     #FIXME What if two color of a Phone??
@@ -52,7 +52,7 @@ class Phone(models.Model):
         MinValueValidator(0, message='Value must be greater than or equal to 0.'),
     ])
     quantity = models.PositiveIntegerField(_("Quantity"))
-    built = models.ForeignKey("core.Country", verbose_name=_("Made IN"), on_delete=models.DO_NOTHING)
+    built = models.ForeignKey("core.Country", to_field="name", verbose_name=_("Made IN"), on_delete=models.DO_NOTHING)
 
     class Meta:
         verbose_name = _("Phone")
@@ -66,7 +66,7 @@ class Phone(models.Model):
 
     @property
     def nationality(self):
-        return self.brand.country
+        return self.brand.country.name 
     @property
     def exist(self):
-        return self.quantity > 0
+        return self.quantity >= 0

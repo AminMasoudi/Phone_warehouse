@@ -2,14 +2,23 @@ from django.contrib.auth.models import User
 
 from rest_framework import serializers
 
-from core.models import Phone
+from core.models import Phone, Brand
 
 
 class PhoneSerializer(serializers.ModelSerializer):
+    # built = serializers.SerializerMethodField(read_only = True)
+    # brand = serializers.SerializerMethodField(read_only = True)
     class Meta:
         model = Phone
         fields = "__all__"
-    # def validate_quantity(self, value)
+        # depth = 2
+
+    def get_built(self, obj):
+        return obj.built.name
+    
+    def get_brand(self, obj):
+        return obj.brand.name
+
 
 
 class LoginSerializer(serializers.Serializer):
@@ -46,3 +55,12 @@ class RegisterSerializer(serializers.Serializer):
             raise serializers.ValidationError("passwords are not match")
         return data
     
+
+class BrandSerializer(serializers.ModelSerializer):
+    nationality = serializers.SerializerMethodField()
+    class Meta:
+        model = Brand
+        fields = ("id", "name", "nationality")
+        
+    def get_nationality(self, obj):
+        return obj.country.name
