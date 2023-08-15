@@ -1,12 +1,17 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
-from rest_framework.generics import ListCreateAPIView
+from rest_framework.generics import ListCreateAPIView, ListAPIView
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .serializers import PhoneSerializer, LoginSerializer, RegisterSerializer, BrandSerializer
+from .serializers import (
+    PhoneSerializer,
+    LoginSerializer,
+    RegisterSerializer,
+    BrandSerializer
+)
 from core.models import Phone, Brand, Country
 from . import utils
 
@@ -43,15 +48,6 @@ class PhoneAPI(ListCreateAPIView):
     queryset = Phone.objects.all()
     serializer_class = PhoneSerializer
     
-    # def get_queryset(self):
-    #     if 'nationality' in self.request.GET:
-    #         l = Phone.objects.all()
-    #         return list(filter(lambda x: utils.filter_by_nationality(x,self.request.GET["nationality"]), l))
-    #     elif "builtenationality" in self.request.GET:
-    #         l = Phone.objects.all()
-    #         return list(filter(lambda x: utils.filter_by_nationality(x), l))
-    #     return super().get_queryset()
-    
 
 
 class BrandsAPI(APIView):
@@ -64,3 +60,32 @@ class BrandsAPI(APIView):
             brands = Brand.objects.filter(country=country.pk).all()
             brands = BrandSerializer(brands, many=True)
             return Response(brands.data)
+
+class OriginalAPI(APIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = BrandSerializer
+
+    def get(self, request, *args, **kwargs):
+        phones = Phone.objects.all()
+        phones = list(filter(
+            lambda x: utils.filter_by_nationality(x),
+            phones
+        ))
+        phones = PhoneSerializer(phones, many=True)        
+        return Response(phones.data)
+    
+
+class NationalityAPI(APIView):
+    serializer_class = PhoneSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        country_code = kwargs["code"]
+        country = Country.objects.filter(code=country_code).first()
+        phones = Phone.objects.all()
+        phones = list(filter(
+            lambda x: utils.filter_by_nationality(x, country.name),
+            phones
+        ))
+        phones = PhoneSerializer(phones, many=True)        
+        return Response(phones.data)
