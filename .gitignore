@@ -1,5 +1,7 @@
 **/.venv
+**/.vscode
 **/db.sqlite3
 **/mariadb.cnf
 **/TODO.md
 **/__pycache__/
+**/LOGS/
