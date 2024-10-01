@@ -5,6 +5,10 @@ SECRET_KEY ?= $(shell bash -c 'read -p "SECRET_KEY: " SECRET_KEY; echo $$SECRET_
 install:
 	@pip install -r req.pip
 
+user: export DEBUG=True
+user:
+	@./manage.py createsuperuser
+
 run: export DEBUG=True
 run: migrate
 	@./manage.py runserver

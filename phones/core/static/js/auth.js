@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function main(event) {
             return data.json();
         }).then(update =>{
                 addToHeader("authenticated successfully")
-            
+                document.location.href = "/"
         })
     })
 
