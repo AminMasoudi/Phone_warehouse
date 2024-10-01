@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
+import os, json
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,10 +20,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-6@$*yiym8q4n#qztm86qhjp+*r_7rr%vdgscw&m%-oc3ny6w30'
+SECRET_KEY = os.environ.get("SECRET_KEY") or "django-insecure-))_bs!83srg'lndrf-rfsz*-yy34sm#k#c69jx)=ye15^(^ayc@88"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", False) == "True"
 
 ALLOWED_HOSTS = ["*"]
 
@@ -79,27 +79,22 @@ WSGI_APPLICATION = 'phones.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'read_default_file': f'{BASE_DIR}/mariadb.cnf',
-        },
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
-
-
-
-
-
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'OPTIONS': {
+                'read_default_file': f'{BASE_DIR}/mariadb.cnf',
+            },
+        }
+    }
 
 
 # Password validation
@@ -144,41 +139,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers":False,
-
-    "formatters": {
-        "verbose": {
-            "format": "[{levelname}] {asctime} {module} {process:d} {thread:d} {message}",
-            "style": "{",
-        },
-        "simple": {
-            "format": "{levelname} : {message}",
-            "style": "{"
-        }
-    },
-    
-    "handlers":{
-        "debug_logs":{
-            "level":"DEBUG",
-            "class": "logging.FileHandler",
-            "filename": BASE_DIR / "LOGS/DEBUG.log",
-            "formatter": "simple"
-        },
-        "warnings_log":{
-            "level": "WARNING",
-            "class": "logging.FileHandler",
-            "filename": BASE_DIR / "LOGS/WARNING.log",
-            "formatter": "verbose"
-        },
-
-    },
-    "loggers":{
-        "":{
-            "level": 'DEBUG',
-            "handlers":["warnings_log",'debug_logs'],
-        },
-
-    }
-}
+logger_conf_file = open("phones/logger.json")
+LOGGS_DIR = BASE_DIR / "LOGS"
+LOGGS_DIR.mkdir(exist_ok=True)
+LOGGING = json.loads(logger_conf_file.read())
