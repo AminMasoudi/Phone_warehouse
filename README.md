@@ -2,14 +2,14 @@
 
 
 ## Usage:
- - build a `mariadb.cnf`
- - start mariadb with `sudo systemctl start mariadb.service`
- - create database `phones`
- - install requirements with `pip install -r req.pip`
- - migrate the tables to database with `./mmanage.py migrate`
- - and run server with `./manage.py runserver`
- - register in `http://127.0.0.1:8000/register/`
- - see swagger documentation in `/swagger/`
+go into phones directory and execute the command bellow to install dependencies(you can use venv)
+```bash
+make install
+```
+and this one to run in debug mode
+```bash
+make run
+```
 
 ## TODO:
 - [ ] add TestCases
